@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DM to PPTX — AI STUDIO PAUL</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --text: #e8e0d0;
+    --text-dim: #8a8478;
+    --accent: #ff4136;
+    --accent2: #00c853;
+    --card-bg: #151515;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(255, 65, 54, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(0, 200, 83, 0.04) 0%, transparent 50%);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-30px, 20px) rotate(3deg); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+  }
+
+  .emoji-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    display: block;
+    animation: floatEmoji 3s ease-in-out infinite;
+  }
+
+  @keyframes floatEmoji {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(40px, 8vw, 72px);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: clamp(12px, 2vw, 16px);
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 48px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-desc strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ===== FLOW ===== */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    background: var(--card-bg);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    min-width: 120px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .flow-step:hover {
+    transform: translateY(-4px);
+    border-color: #3a3a3a;
+  }
+
+  .flow-step-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .flow-step-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--text-dim);
+  }
+
+  /* ===== CTA ===== */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    padding: 16px 40px;
+    border-radius: 60px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.5s;
+  }
+
+  .cta-btn:hover::before {
+    left: 100%;
+  }
+
+  .cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 65, 54, 0.3);
+  }
+
+  .colab-logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ===== STATS ===== */
+  .stats {
+    padding: 80px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(28px, 5vw, 40px);
+    color: var(--accent2);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* ===== STORY ===== */
+  .story {
+    padding: 0 24px 80px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .story-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .story-text {
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text);
+  }
+
+  .story-text .highlight {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ===== SUPPORTED ===== */
+  .supported {
+    padding: 0 24px 80px;
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .supported-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .supported-sites {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .site-badge {
+    background: var(--card-bg);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px 40px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .site-badge:hover {
+    transform: translateY(-4px);
+  }
+
+  .site-badge-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .site-badge-dot.red { background: var(--accent); }
+  .site-badge-dot.blue { background: #448aff; }
+
+  .site-badge-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .site-badge-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ===== BACK ===== */
+  .back-link {
+    display: block;
+    text-align: center;
+    padding: 40px 24px 60px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    transition: color 0.3s;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .flow {
+      flex-direction: column;
+    }
+    .flow-arrow {
+      transform: rotate(90deg);
+    }
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .supported-sites {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="emoji-icon">📄</span>
+    <h1 class="hero-title">DM to PPTX</h1>
+    <p class="hero-subtitle">Auto Catalog Converter</p>
+    <p class="hero-desc">
+      台湾の百貨店のデジタルチラシを<br>
+      <strong>自動でPowerPointに変換</strong>するツール。<br>
+      URLを指定してボタンを押すだけ。
+    </p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-step-icon">🌐</div>
+        <div class="flow-step-text">サイトに<br>自動アクセス</div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="flow-step-icon">🖼️</div>
+        <div class="flow-step-text">チラシ画像を<br>自動取得</div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="flow-step-icon">📊</div>
+        <div class="flow-step-text">PowerPointに<br>自動変換</div>
+      </div>
+    </div>
+
+    <a href="#" class="cta-btn" id="colab-btn">
+      <svg class="colab-logo" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16.94 2l-1.41 1.41 1.46 1.46A8.97 8.97 0 0 0 13 4C8.03 4 4 8.03 4 13s4.03 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61l1.46-1.46L22.9 4.52 16.94 2zM13 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+      </svg>
+      OPEN IN COLAB
+    </a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats fade-in">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">90<span style="font-size:60%">min</span></div>
+      <div class="stat-label">開発時間</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3<span style="font-size:60%">min</span></div>
+      <div class="stat-label">毎月の作業時間</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0<span style="font-size:60%">行</span></div>
+      <div class="stat-label">手書きコード</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story fade-in">
+  <h2 class="story-title">Background</h2>
+  <p class="story-text">
+    友人に「台湾の百貨店のデジタルチラシを毎月PowerPointにまとめてるんだけど、画像を1枚ずつ保存してスライドに貼って…って作業で毎月1時間くらいかかる」と相談されて、AIと一緒に開発。サイトの構造が複雑で<span class="highlight">8回のデバッグ</span>を経て完成。プログラミング知識ゼロ、自分がやったのは「こういうの作りたい」と伝えてエラーのスクショを送ること。
+  </p>
+</section>
+
+<!-- SUPPORTED SITES -->
+<section class="supported fade-in">
+  <h2 class="supported-title">Supported Sites</h2>
+  <div class="supported-sites">
+    <div class="site-badge">
+      <div class="site-badge-dot red"></div>
+      <div class="site-badge-name">美麗華百樂園</div>
+      <div class="site-badge-sub">Miramar</div>
+    </div>
+    <div class="site-badge">
+      <div class="site-badge-dot blue"></div>
+      <div class="site-badge-name">遠東百貨</div>
+      <div class="site-badge-sub">Far Eastern Dept. Store</div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK -->
+<a href="https://paul13131313.github.io/studio-paul/#works" class="back-link">← AI STUDIO PAUL</a>
+
+<!-- Scroll animation -->
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
